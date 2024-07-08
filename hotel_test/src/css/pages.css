@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.bg-nav{
+    background-color: #42A5F5;
+}
+
+:hover.bg-btn-nav{
+    background-color: #d6a356;
+}
