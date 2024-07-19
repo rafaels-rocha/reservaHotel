@@ -6,7 +6,7 @@ require_once('../../api/globais.php');
 
 <body class="flex items-center justify-center h-screen bg-gray-200">
 
-<form action="backend/index.php" method="POST" onsubmit="event.preventDefault(); cadastrarUsuario(); " id="cadastroForm" class="bg-white shadow-md rounded-md w-1/2">
+<form  class="bg-white shadow-md rounded-md w-1/2">
         <div class="p-2 shadow-lg bg-gray-100 rounded-lg text-center">
             <h1 class="font-sans text-2xl font-bold">Faça o seu Cadastro</h1>
         </div>
@@ -66,7 +66,7 @@ require_once('../../api/globais.php');
         </div>
 
         <div class="text-center my-6">
-            <button type="button" id="btnCadastrar" class="w-1/2 bg-gray-500 hover:bg-slate-700 ease-linear duration-300 text-white rounded-lg py-2" >Cadastre-se</button>
+            <button onclick="cadastrarUsuario()" type="button" class="w-1/2 bg-gray-500 hover:bg-slate-700 ease-linear duration-300 text-white rounded-lg py-2" >Cadastre-se</button>
         </div>
         <div class="text-left">
             <a href="login.php" class="m-4 text-gray-800 hover:text-gray-600">Já possui cadastro?</a>
