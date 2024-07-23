@@ -5,6 +5,7 @@ if (isset($_POST['dataAjax']) && $_POST['dataAjax'] != '') {
 
   
     $ajax['action'] === 'cadastrarUsuario' ? cadastrarUsuario($ajax) : '';
+    $ajax['action'] === 'loginUsuario' ? loginUsuario($ajax) : '';
   }
 
 // function connectDatabase() {
@@ -70,6 +71,53 @@ function cadastrarUsuario($data) {
     $conn->close();
 
    
+    echo json_encode($response);
+}
+
+
+function loginUsuario($data) {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "reserva_teste";
+  
+    $login = $data['login'];
+    $senha = $data['senha'];
+    
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Falha na conexão: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT senha FROM usuario WHERE login = ? OR email = ?";
+    
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("ss", $login, $login);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                if ($row['senha'] === md5($senha)) {
+                    $response = array("status" => "success", "message" => "Login realizado com sucesso!");
+                } else {
+                    $response = array("status" => "error", "message" => "Login ou senha incorretos.");
+                }
+            } else {
+                $response = array("status" => "error", "message" => "Login ou senha incorretos.");
+            }
+        } else {
+            $response = array("status" => "error", "message" => "Erro ao executar consulta: " . $stmt->error);
+        }
+
+        $stmt->close();
+    } else {
+        $response = array("status" => "error", "message" => "Erro na preparação da consulta: " . $conn->error);
+    }
+
+    $conn->close();
+
     echo json_encode($response);
 }
 
