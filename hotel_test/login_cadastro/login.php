@@ -4,24 +4,7 @@ require_once('../../api/globais.php');
 <script src="js/main.js"></script>
 <title>Faça seu login</title>
 <body class="flex items-center justify-center h-screen bg-gray-200">
-<style>
-        .alert {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-            color: #fff;
-        }
-        .alert.success {
-            background-color: green;
-        }
-        .alert.error {
-            background-color: red;
-        }
-</style>
+
 
     <form id="loginForm" class="bg-white shadow-md rounded-md px-10 py-8 mb-4">
         <div class=" p-2  shadow-lg bg-gray-100 rounded-lg  text-center">

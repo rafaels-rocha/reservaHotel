@@ -29,7 +29,7 @@ function cadastrarUsuario($data) {
     $username = "root";
     $password = "";
     $dbname = "reserva_teste";
-  
+
     $login = $data['login'];
     $senha = $data['senha'];
     $nome = $data['nome'];
@@ -37,12 +37,15 @@ function cadastrarUsuario($data) {
     $email = $data['email'];
     $telefone = $data['telefone'];
 
-  
 
-   
+    if (empty($login) || empty($senha) || empty($nome) || empty($cpf) || empty($email) || empty($telefone)) {
+        $response = array("status" => "error", "message" => "Preencha todos os campos");
+        echo json_encode($response);
+        return;
+    }
+
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-   
     if ($conn->connect_error) {
         die("Falha na conexão: " . $conn->connect_error);
     }
@@ -50,19 +53,18 @@ function cadastrarUsuario($data) {
     $sql = "INSERT INTO usuario (login, senha, email, nome_pessoa, telefone_pessoa, cpf_pessoa) 
             VALUES (?, ?, ?, ?, ?, ?)";
 
-
     if ($stmt = $conn->prepare($sql)) {
-        
-        $stmt->bind_param("ssssss",$login, md5($senha), $email, $nome, $telefone, $cpf);
+        $hashedPassword = password_hash($senha, PASSWORD_BCRYPT);
 
-       
+        $stmt->bind_param("ssssss", $login, $hashedPassword, $email, $nome, $telefone, $cpf);
+
         if ($stmt->execute()) {
             $response = array("status" => "success", "message" => "Usuário cadastrado com sucesso!");
+            
         } else {
             $response = array("status" => "error", "message" => "Erro ao cadastrar usuário: " . $stmt->error);
         }
 
-       
         $stmt->close();
     } else {
         $response = array("status" => "error", "message" => "Erro na preparação da declaração: " . $conn->error);
@@ -70,9 +72,9 @@ function cadastrarUsuario($data) {
 
     $conn->close();
 
-   
     echo json_encode($response);
 }
+
 
 
 function loginUsuario($data) {

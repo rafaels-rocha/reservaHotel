@@ -2,7 +2,7 @@
 require_once('../../api/globais.php');
 ?>
 <script src="js/main.js"></script>
-<title>Faça seu login</title>
+<title>Faça seu Cadastro</title>
 
 <body class="flex items-center justify-center h-screen bg-gray-200">
 
@@ -71,7 +71,9 @@ require_once('../../api/globais.php');
         <div class="text-left">
             <a href="login.php" class="m-4 text-gray-800 hover:text-gray-600">Já possui cadastro?</a>
         </div>
+
     </form>
+    <div id="alert" class="alert"></div> 
 </body>
 
 </html>

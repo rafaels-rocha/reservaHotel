@@ -78,7 +78,7 @@ function cadastrarUsuario() {
   const cpf = document.getElementById('cpf_pessoa').value;
   const email = document.getElementById('email_pessoa').value;
   const telefone = document.getElementById('telefone_pessoa').value;
-  console.log(login + 'teste');
+
 
  
   const data = {
@@ -93,6 +93,10 @@ function cadastrarUsuario() {
     myAjax("POST", "backend/index.php", data, (response) => {
       const result = JSON.parse(response.responseText.replaceAll('_@_', ','));
       showAlert_2(result.status, result.message);
+      if (result.status === "success") {
+     
+        window.location.href = `../../hotel_test/sistema/?token=${result.token}`;
+    }
     });
   
 }
